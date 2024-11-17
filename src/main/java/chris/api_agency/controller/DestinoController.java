@@ -1,5 +1,7 @@
 package chris.api_agency.controller;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import chris.api_agency.entitie.Destino;
 import org.springframework.web.bind.annotation.*;
@@ -8,11 +10,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/destino")
 
 public class DestinoController {
-    ArrayList<Destino> destinos = new ArrayList<Destino>();
+    ArrayList<Destino> destinos = new ArrayList<>();
 
     @GetMapping()
-    public ArrayList<Destino> getUsers() {
-        return destinos;
+    public List<String> getDestinos() {
+        return destinos.stream()
+                .map(Destino::getNome)
+                .collect(Collectors.toList());
     }
 
     @PostMapping()

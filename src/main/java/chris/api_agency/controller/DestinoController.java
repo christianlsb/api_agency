@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import chris.api_agency.entitie.Destino;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/destino")
@@ -18,10 +20,20 @@ public class DestinoController {
                 .map(Destino::getNome)
                 .collect(Collectors.toList());
     }
+    @GetMapping(value = "/{id_destino}")
+    public Destino detalhesDoDestino(@PathVariable Long id_destino) {
+        for (Destino destino : destinos) {
+            if (destino.getId_destino().equals(id_destino)) {
+                return destino;
+            }
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado");
+    }
 
     @PostMapping()
     public Destino criarDestino(@RequestBody  Destino destino) {
         destinos.add(destino);
         return destino;
     }
+
 }

@@ -49,9 +49,8 @@ public class DestinoController {
 
         for (Destino procurarIdDestino : destinos) {
             if (procurarIdDestino.getId_destino().equals(id_destino)) {
-                destino.setAvaliacao(avaliacao);
-                //TODO: salvar a avaliacao no destino.
-                return destino;
+                procurarIdDestino.setAvaliacao(avaliacao);
+                return procurarIdDestino;
             }
         }
 

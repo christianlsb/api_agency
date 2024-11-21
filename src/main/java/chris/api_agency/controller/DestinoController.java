@@ -49,11 +49,12 @@ public class DestinoController {
 
         for (Destino procurarIdDestino : destinos) {
             if (procurarIdDestino.getId_destino().equals(id_destino)) {
-                procurarIdDestino.setAvaliacao(avaliacao);
+                procurarIdDestino.getAvaliacoes().add(avaliacao);
                 return procurarIdDestino;
             }
         }
 
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado");
     }
+
 }

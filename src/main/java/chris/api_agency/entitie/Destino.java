@@ -1,5 +1,7 @@
 package chris.api_agency.entitie;
 
+import java.util.ArrayList;
+
 public class Destino {
     private Long id_destino;
     private String nome;
@@ -7,6 +9,7 @@ public class Destino {
     private String latitude;
     private String longitude;
     private double avaliacao;
+    private ArrayList<Double> avaliacoes = new ArrayList<>();
 
     public Long getId_destino() {
         return id_destino;
@@ -55,6 +58,27 @@ public class Destino {
     public void setAvaliacao(double avaliacao) {
         this.avaliacao = avaliacao;
     }
+
+
+    public ArrayList<Double> getAvaliacoes() {
+        return avaliacoes;
+    }
+
+    public void setAvaliacoes(ArrayList<Double> avaliacoes) {
+        this.avaliacoes = avaliacoes;
+    }
+
+    public double getMediaAvaliacao() {
+        if (avaliacoes.isEmpty()) {
+            return 0;
+        }
+        double soma = 0;
+        for (Double avaliacao : avaliacoes) {
+            soma += avaliacao;
+        }
+        return soma / avaliacoes.size();
+    }
+
 }
 
 

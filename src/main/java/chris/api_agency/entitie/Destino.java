@@ -10,6 +10,7 @@ public class Destino {
     private String longitude;
     private double avaliacao;
     private ArrayList<Double> avaliacoes = new ArrayList<>();
+    private ArrayList<Reserva> reservas = new ArrayList<>();
 
     public Long getId_destino() {
         return id_destino;
@@ -77,6 +78,14 @@ public class Destino {
             soma += avaliacao;
         }
         return soma / avaliacoes.size();
+    }
+
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
     }
 
 }

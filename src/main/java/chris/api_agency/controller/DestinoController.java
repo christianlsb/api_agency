@@ -1,60 +1,51 @@
 package chris.api_agency.controller;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import chris.api_agency.entitie.Destino;
-import org.springframework.http.HttpStatus;
+import chris.api_agency.service.DestinoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/destino")
-
 public class DestinoController {
-    ArrayList<Destino> destinos = new ArrayList<>();
+    private final DestinoService destinoService;
+
+    @Autowired
+    public DestinoController(DestinoService destinoService) {
+        this.destinoService = destinoService;
+    }
 
     @GetMapping()
     public List<String> getDestinos() {
-        return destinos.stream()
-                .map(Destino::getNome)
-                .collect(Collectors.toList());
+        return destinoService.getAllDestinos();
     }
 
     @GetMapping(value = "/{id_destino}")
     public Destino detalhesDoDestino(@PathVariable Long id_destino) {
-        for (Destino destino : destinos) {
-            if (destino.getId_destino().equals(id_destino)) {
-                return destino;
-            }
-        }
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado");
+        return destinoService.getDestinoById(id_destino);
     }
 
     @PostMapping()
     public Destino criarDestino(@RequestBody Destino destino) {
-        destinos.add(destino);
-        return destino;
+        return destinoService.criarDestino(destino);
     }
 
     @PutMapping(value = "/avaliar")
     public Destino enviarAvaliacao(@RequestBody Destino destino) {
-
-        double avaliacao = destino.getAvaliacao();
-        Long id_destino = destino.getId_destino();
-
-        if(avaliacao > 10 || avaliacao < 0) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Avaliação fora do intervalo permitido");
-        }
-
-        for (Destino procurarIdDestino : destinos) {
-            if (procurarIdDestino.getId_destino().equals(id_destino)) {
-                procurarIdDestino.getAvaliacoes().add(avaliacao);
-                return procurarIdDestino;
-            }
-        }
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Destino não encontrado");
+        return destinoService.avaliarDestino(destino);
     }
+
+    @DeleteMapping(value = "/{id_destino}")
+    public void deleteDestino(@PathVariable Long id_destino) {
+        destinoService.deleteDestinoById(id_destino);
+    }
+    @GetMapping("/pesquisar")
+        public List<Destino> pesquisarDestinos(
+        @RequestParam(required = false) String nome,
+        @RequestParam(required = false) String localizacao) {
+    return destinoService.pesquisarDestinos(nome, localizacao);
+}
 
 }

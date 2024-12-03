@@ -41,7 +41,7 @@ public class ReservaService {
 
     public List<Reserva> listarReservasPorDestino(Long idDestino) {
         return reservas.stream()
-                .filter(r -> r.getIdDestino().equals(idDestino))
+                .filter(r -> r.getIdDestino().equals(idDestino)) 
                 .toList();
     }
 }

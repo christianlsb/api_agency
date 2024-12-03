@@ -41,11 +41,11 @@ public class DestinoController {
     public void deleteDestino(@PathVariable Long id_destino) {
         destinoService.deleteDestinoById(id_destino);
     }
+
     @GetMapping("/pesquisar")
-        public List<Destino> pesquisarDestinos(
+    public List<Destino> pesquisarDestinos(
         @RequestParam(required = false) String nome,
         @RequestParam(required = false) String localizacao) {
-    return destinoService.pesquisarDestinos(nome, localizacao);
-}
-
+        return destinoService.pesquisarDestinos(nome, localizacao);
+    }
 }
